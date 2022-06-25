@@ -1,0 +1,29 @@
+# backup
+
+sudo apt-get install dump*
+
+sudo dump 0uaf /dev/sdb5 /dev/sda5
+
+dump -Ww
+
+# schedule
+
+sudo crontab -e
+
+mintute hour * * * /bin/sh /home/(yoursystemusername)/script.sh
+
+sudo nano script.sh
+
+touch /home/(yoursystemusername)/Desktop/newfile.txt
+
+# trobule shooting commands
+
+ifconfig
+
+netstat -r
+
+arp
+
+ping
+
+dig

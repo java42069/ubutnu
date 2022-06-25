@@ -1,0 +1,122 @@
+sudo apt install bind9*
+-----------------------------------------
+sudo nano /etc/netplan/00-installer-config.yaml
+
+network:
+  ethernets:
+    enp0s3:
+      addresses: [192.168.10.7/24]
+      gateway4: 192.168.10.1
+      nameservers:
+          addresses: [192.168.10.7]
+      dhcp4: no
+  version: 2
+
+sudo netplan try
+
+sudo netplan apply
+----------------------------------------------------
+cd /etc/bind
+
+sudo nano named.conf.options
+
+options {
+	directory "/var/cache/bind";
+	dnssec-validation auto;
+	listen-on-v6 { any; };
+
+        recursion yes;
+        listen-on {192.168.10.7;};
+        allow-transfer {none;};
+
+        forwarders {
+           192.168.10.7;
+        };
+};
+
+
+named-checkconf named.conf.options
+--------------------------------------------------------
+sudo nano named.conf.local
+
+//forward lookup zone
+zone "dcn.com" IN {
+        type master;
+        file "/etc/bind/db.dcn.com";
+};
+
+//reverse lookup zone
+zone "10.168.192.in-addr.arpa" IN {
+        type master;
+        file "/etc/bind/db.10.168.192";
+};
+
+
+named-checkconf named.conf.local
+-------------------------------------------------------
+sudo mv db.local db.dcn.com
+
+sudo nano db.dcn.com
+
+
+
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     www.dcn.com. root.dcn.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      dcn.com.
+www     IN      A       192.168.10.7
+@       IN      AAAA    ::1
+
+
+
+
+named-checkzone named.conf.local  db.dcn.com 
+----------------------------------------------------------
+sudo mv db.127 db.10.168.192
+
+sudo nano db.10.168.192
+
+
+
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     www.dcn.com. root.dcn.com. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      www.dcn.com.
+7       IN      PTR     www.dcn.com.
+
+
+
+
+named-checkzone named.conf.local  db.10.168.192 
+----------------------------------------------------------------
+sudo rm -rf /etc/resolv.conf 
+
+sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+------------------------------------------------------------------
+sudo systemctl restart bind9.service 
+
+dig www.dcn.com
+
+nslookup www.dcn.com
+------------------------------------------------------------------
+sudo nano /etc/hosts
+
+127.0.0.1 localhost
+127.0.1.1 (server).dcn.com (server)
+192.168.10.7 (server).dcn.com (server)

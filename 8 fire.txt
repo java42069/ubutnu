@@ -1,0 +1,11 @@
+iptables -A INPUT -s (youripadd) -i DROP
+iptables -L
+ping (youripadd)
+iptables -L --line-number
+iptables -D INPUT 1
+ping (youripadd)
+iptables -L
+iptables --flush
+iptables --save
+iptables --vector
+systemctl restart iptables

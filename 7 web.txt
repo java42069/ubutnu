@@ -1,0 +1,25 @@
+sudo apt install apache2*
+------------------------------
+cd /var/www/html/
+------------------------------
+sudo nano index.html 
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>name</title>
+    </head>
+    <body>
+        <h1>name</h1>
+	<p>
+            rollno
+        </p>
+    </body>
+</html>
+--------------------------------
+sudo nano /etc/hosts
+
+127.0.0.1 localhost
+127.0.1.1 (server).dcn.com (server)
+192.168.10.7 (server).dcn.com (server)
+

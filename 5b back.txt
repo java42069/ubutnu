@@ -1,0 +1,35 @@
+mkdir data
+----------------------
+cd data
+---------------------
+touch data.txt
+---------------------
+cd /
+---------------------
+mkdir backup
+---------------------
+cd /home/(yoursystemusername)/Desktop
+------------------------
+touch backup.sh
+---------------------
+sudo chmod -R 777 backup.sh
+-------------------------
+sudo nano backup.sh
+----------------------------
+#!/bin/bash
+
+f1="/home/(yoursystemusername)/data/data.txt";
+backupfilename="/backup/backup_`date +%d_%m_%Y`.tar";
+
+sudo tar -cvf $backupfilename $f1
+
+cd /backup
+
+du -sh 
+---------------------------------
+bash backup.sh
+---------------------------------
+cd /backup
+---------------------------------
+ls
+

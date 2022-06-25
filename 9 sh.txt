@@ -1,0 +1,49 @@
+touch demo.sh
+
+sudo chmod -R 777 demo.sh
+
+sudo nano demo.sh
+
+
+--------------------------------------
+#!/bin/bash
+echo "Hi I am yourname"
+echo "Today is $(date)"
+echo "Bye for now"
+echo "Enter Your Name"
+read name
+echo "Welcome $name to DCN"
+echo "_______________________________"
+
+echo "Enter username" 
+read username
+echo "Enter password"
+read password
+
+if [[ ( $username == "admin" && $password == "dcn" ) ]]; then
+echo "valid user"
+else
+echo "invalid user"
+fi
+echo "_______________________________"
+
+echo "Enter the directory name to create :"
+read directory_name 
+mkdir $directory_name
+echo "Your $directory_name directory has been created successfully"
+du -sh $directory_name
+
+echo "_______________________________"
+echo "Enter the user name to create in this system :"
+read user
+sudo adduser $user
+echo "....*"
+echo "....****"
+echo "....******"
+echo "....***********"
+echo "....***************"
+echo "your $user user has created successfully !"
+tail /etc/passwd | grep $user
+
+----------------------------------------
+bash demo.sh

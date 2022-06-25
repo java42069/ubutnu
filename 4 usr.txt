@@ -1,0 +1,63 @@
+#1
+adduser mary
+tail /etc/passwd
+addgroup wheel
+addgroup sales
+addgroup user
+usermod -u 10000 mary
+usermod -g user mary
+usermod -G wheel,sales mary
+
+#2
+adduser x
+tail /etc/passwd
+usermod -G user x
+
+#3
+adduser x
+usermod -d /home/dcn smith
+tail /etc/passwd
+
+#4
+addgroup project
+usermod -G project mary
+usermod -G project x
+usermod -G project smith
+usermod -G sudo mary
+grep sudo /etc/passwd
+
+#5
+su mary
+gpasswd -d x project
+tail /etc/passwd
+
+#6
+nano /etc/motd
+Today is good day
+Ctrl+Alt+F3 -> login in mary account
+
+#7
+usermod -l jenny mary
+tail /etc/passwd
+
+#8
+su x
+usermod -G user x
+touch demo.txt
+ls -l
+id x
+
+#9
+su mary
+cd /home/x
+ls
+
+#10
+useradd -r x
+cd /home
+ls
+
+#11
+su x
+chown -R mary demo.txt
+ls -l

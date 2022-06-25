@@ -1,0 +1,17 @@
+File management :
+ls- list files
+ls-R - list files inside the directory
+cd- change directory 
+rm- remove files
+rmdir- remove directory 
+mv- move file
+cp- copy files
+Mkdir- make directory 
+ln- create links
+Chmod- change permissions 
+Touch- create empty files
+
+
+Permissions commands: 
+Chmod- Change permissions
+r-w-x Directory permissions
